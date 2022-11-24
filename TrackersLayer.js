@@ -123,9 +123,10 @@ const TrackersLayer = L.GeoJsonLayer.extend({
                 sourceTarget: marker
             })
         });
+        const backend = Gis.Site.BackendAddress();
         let popupContent = `${feature.properties.name} скачать трек: ` +
-            `<br/><a href="${PageModel.backendAddress}/v2/other/onlinemonitor/exporttrackasgpx/${feature.properties.id}.gpx">отображаемый</a>` +
-            `<br/><a href="${PageModel.backendAddress}/v2/other/onlinemonitor/exportrawtrackasgpx/${feature.properties.id}.gpx">исходный</a>`
+            `<br/><a href="${backend}/v2/other/onlinemonitor/exporttrackasgpx/${feature.properties.id}.gpx">отображаемый</a>` +
+            `<br/><a href="${backend}/v2/other/onlinemonitor/exportrawtrackasgpx/${feature.properties.id}.gpx">исходный</a>`
 
         marker.bindPopup(L.popup().setContent(popupContent));
         const circle = L.circle(latlng, {
