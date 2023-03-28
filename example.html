@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TrackersMarker example</title>
+    <meta charset="utf-8" />
+    <!-- Include Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js"></script>
+
+    <!-- Include the plugin -->
+    <script src="./TrackersMarker.js"></script>
+</head>
+<body>
+    <div style="width:500px;height:500px" id="testMap"></div>
+    <script>
+        var openStreetMap = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        });
+        var ImageCache = [];
+        var testMap = new L.Map('testMap', {
+            layers: [openStreetMap],
+            preferCanvas: true,
+            center: new L.LatLng(60, 30),
+            zoom: 13
+        });
+        const latLngElev = [60, 30, 1000];
+        const hdop = Math.random() * 1000;
+        const color = Math.round(Math.random() * 6)+1;
+        const direction = Math.random() * 360;
+        const feature = {
+            coordinates: latLngElev,
+            type: "Point",
+            properties: {
+                name: "TEST",
+                timeFmt: "2222-11-11 11:11",
+                direction: direction,
+                hdop: hdop,
+                timestamp: 20000000,
+            }
+        };
+        const tracker = L.trackersMarker(latLngElev, {
+            radius: 20,
+            iconClassName: `gis-trackers-arrow:${color}`
+        });
+        tracker.feature = feature;
+        tracker.addTo(testMap);
+    </script>
+   
+</body>
+</html>
