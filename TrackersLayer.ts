@@ -51,14 +51,19 @@ namespace L {
             marker.feature = feature;
         
             marker.feature.properties.timeFmt = feature.properties.localTime;
+            const batteryMsg = feature.properties.battery ? ` ${Math.round(feature.properties.battery)}%` : "";
+            const sourceMsg = feature.properties.source ? ` (${feature.properties.source}${batteryMsg})` : "";
             marker.on('mouseover', function () {
+                
+                const hdopMsg = feature.properties.hdop ? ` точность ±${Math.round(feature.properties.hdop)} м.` : "";
+                const msg = `${feature.properties.name}${sourceMsg} ${feature.properties.localTime}${hdopMsg}`;
                 self._map.fire('gis:tooltip', {
-                    message: `${feature.properties.name} ${feature.properties.localTime} точность ±${Math.round(feature.properties.hdop)} м.`,
+                    message: msg,
                     sourceTarget: marker
                 })
             });
             const backend = Gis.Site.BackendAddress();
-            let popupContent = `${feature.properties.name} скачать трек: ` +
+            const popupContent = `${feature.properties.name}${feature.properties.source ? ` (${feature.properties.source})` : ""} скачать трек: ` +
                 `<br/><a href="${backend}/v2/other/onlinemonitor/exporttrackasgpx/${feature.properties.id}.gpx">отображаемый</a>` +
                 `<br/><a href="${backend}/v2/other/onlinemonitor/exportrawtrackasgpx/${feature.properties.id}.gpx">исходный</a>`
 

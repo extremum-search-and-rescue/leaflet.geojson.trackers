@@ -5,7 +5,6 @@
     export class TrackersMarker extends L.CircleMarker {
         override options: TrackersMarkerOptions;
         private _renderer: L.Canvas;
-        private _radius: number;
         private _pxBounds: BoundsExpression;
         private _point: L.Point;
 
@@ -50,7 +49,7 @@
             return this;
         }
         override getRadius() {
-            return this._radius;
+            return 100;
         }
 
         _updatePath() {
